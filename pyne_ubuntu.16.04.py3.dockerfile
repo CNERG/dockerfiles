@@ -32,7 +32,7 @@ RUN echo "export PATH=$HOME/.local/bin:\$PATH" >> ~/.bashrc \
     && echo "alias python=python3" >> ~/.bashrc \
     && echo "alias nosetests=nosetests3" >> ~/.bashrc
 
-RUN gcc --version
+RUN pip3 install cython --force-reinstall
 
 # build MOAB
 RUN cd $HOME/opt \
@@ -40,7 +40,7 @@ RUN cd $HOME/opt \
   && cd moab \
   && git clone https://bitbucket.org/fathomteam/moab \
   && cd moab \
-  && git checkout -b Version5.0 origin/Version5.0 \
+  && git checkout -b Version5.1.0 origin/Version5.1.0 \
   && autoreconf -fi \
   && cd .. \
   && mkdir build \
@@ -63,7 +63,7 @@ RUN ls $HOME/opt/moab
 RUN cd /root \\
     && git clone https://github.com/svalinn/DAGMC.git \
     && cd DAGMC \
-    && git checkout moab-5.0 \
+    && git checkout develop \
     && mkdir bld \
     && cd bld \
     && cmake .. -DMOAB_DIR=$HOME/opt/moab \
@@ -72,10 +72,10 @@ RUN cd /root \\
     && make install
 
 # Install PyNE
-RUN pip3 install cython --force-reinstall
 RUN cd $HOME/opt \
     && git clone https://github.com/cnerg/pyne.git \
     && cd pyne \
+    && git checkout pymoab_cleanup \
     && python3 setup.py install --user \
                                 --moab $HOME/opt/moab --dagmc $HOME/opt/dagmc --clean
 ENV PYTHONPATH=$HOME/opt/moab/lib/python3.6/site-packages/
