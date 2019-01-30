@@ -14,7 +14,7 @@ RUN apt-get update \
             python3-matplotlib python3-jinja2 python3-dev libpython3-dev \
             autoconf libtool python-setuptools python3-pip doxygen \
     && apt-get clean -y \
-    && update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+    && update-alternatives --install /usr/bin/python python /usr/bin/python3 10 \
     && pip3 install --force-reinstall \
             sphinx \
             cloud_sptheme \
