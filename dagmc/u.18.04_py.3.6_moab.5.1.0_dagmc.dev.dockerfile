@@ -1,4 +1,4 @@
-FROM ubuntu.18.04_python.2.7_moab.5.1.0_dagmc:dev
+FROM ubuntu.18.04_python.3.6_moab:5.1.0
 
 ENV INSTALL_PATH=$HOME/opt/dagmc
 RUN cd /root \\

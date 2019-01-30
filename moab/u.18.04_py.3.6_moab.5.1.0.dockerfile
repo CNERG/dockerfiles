@@ -1,29 +1,4 @@
-FROM ubuntu.18.04_py:2.7
-
-ENV TZ=America/Chicago
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-ENV HOME /root
-RUN apt-get clean -y
-
-RUN apt-get update
-RUN apt-get update
-RUN apt-get install -y --fix-missing \
-    software-properties-common wget g++ \
-    build-essential python-numpy python-scipy cython python-setuptools \
-    python-nose git cmake vim emacs gfortran libblas-dev \
-    liblapack-dev libhdf5-dev libhdf5-serial-dev gfortran python-tables \
-    python-matplotlib python-jinja2 python-dev libpython-dev \
-    autoconf libtool python-setuptools python-pip doxygen 
-RUN apt-get clean -y
-                       
-RUN pip install sphinx \
-    cloud_sptheme \
-    prettytable \
-    sphinxcontrib_bibtex \
-    numpydoc \
-    nbconvert \
-    numpy 
+FROM ubuntu.18.04_py:3.6
 
 # make starting directory
 RUN mkdir -p $HOME/opt
@@ -62,6 +37,7 @@ RUN cd $HOME/opt \
 # put MOAB on the path
 ENV LD_LIBRARY_PATH $HOME/opt/moab/lib:$LD_LIBRARY_PATH
 ENV LIBRARY_PATH $HOME/opt/moab/lib:$LIBRARY_PATH
+ENV PYTHONPATH=$HOME/opt/moab/lib/python3.6/site-packages/
 
 # Define default command
 CMD ["/bin/bash"]
