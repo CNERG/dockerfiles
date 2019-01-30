@@ -74,9 +74,8 @@ RUN cd /root \\
 # Install PyNE
 RUN pip3 install cython --force-reinstall
 RUN cd $HOME/opt \
-    && git clone https://github.com/bam241/pyne.git \
+    && git clone https://github.com/cnerg/pyne.git \
     && cd pyne \
-    && git checkout kkiesling-python3 \
     && python3 setup.py install --user \
                                 --moab $HOME/opt/moab --dagmc $HOME/opt/dagmc --clean
 ENV PYTHONPATH=$HOME/opt/moab/lib/python3.6/site-packages/
