@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu.18.04_py:2.7
 
 ENV TZ=America/Chicago
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -62,32 +62,6 @@ RUN cd $HOME/opt \
 # put MOAB on the path
 ENV LD_LIBRARY_PATH $HOME/opt/moab/lib:$LD_LIBRARY_PATH
 ENV LIBRARY_PATH $HOME/opt/moab/lib:$LIBRARY_PATH
-
-
-ENV INSTALL_PATH=$HOME/opt/dagmc
-RUN ls $HOME/opt/moab
-RUN cd /root \\
-    && git clone https://github.com/svalinn/DAGMC.git \
-    && cd DAGMC \
-    && git checkout develop \
-    && mkdir bld \
-    && cd bld \
-    && cmake .. -DMOAB_DIR=$HOME/opt/moab \
-             -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
-    && make \
-    && make install
-
-# Install PyNE
-RUN cd $HOME/opt \
-    && git clone https://github.com/cnerg/pyne.git \
-    && cd pyne \
-    && git checkout pymoab_cleanup \
-    && python setup.py install --user \
-                                --moab $HOME/opt/moab --dagmc $HOME/opt/dagmc --clean
-ENV PYTHONPATH=$HOME/opt/moab/lib/python2.7/site-packages/
-
-ENV PATH $HOME/.local/bin:$PATH
-RUN cd $HOME && nuc_data_make
 
 # Define default command
 CMD ["/bin/bash"]
