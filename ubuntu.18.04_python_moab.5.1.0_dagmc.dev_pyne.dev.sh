@@ -4,12 +4,12 @@
 py_v="3.6"
 if [ ! $# -eq 1 ]; then
     echo "Python version not specified!"
-    echo "Using default version: 3.6"
+    echo "Using default version: ${py_v}"
 elif [ $1 == "3.6" ] || [ $1 == "2.7" ]; then
     py_v=$1
 else 
     echo "2.7 and 3.6 are the only supported Python version !"
-    echo "Using default version: 3.6"
+    echo "Using default version: ${py_v}"
 fi
 
 # build Ubuntu 18.04 with required python version
