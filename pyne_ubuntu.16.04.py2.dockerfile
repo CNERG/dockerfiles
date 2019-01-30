@@ -41,13 +41,19 @@ RUN cd $HOME/opt \
   && git clone https://bitbucket.org/fathomteam/moab \
   && cd moab \
   && git checkout -b Version5.1.0 origin/Version5.1.0 \
-  && autoreconf -fi \
   && cd .. \
   && mkdir build \
   && cd build \
-  && ../moab/configure --enable-shared --enable-dagmc  --enable-pymoab \
-                       --with-hdf5=/usr/lib/x86_64-linux-gnu/hdf5/serial \
-                       --prefix=$HOME/opt/moab \
+  && ls ../moab/ \
+  && cmake ../moab/ \
+        -DCMAKE_INSTALL_PREFIX=$HOME/opt/moab \
+        -DENABLE_HDF5=ON \
+  && make -j 3 \
+  && make install \
+  && cmake ../moab/ \
+        -DCMAKE_INSTALL_PREFIX=$HOME/opt/moab \
+        -DENABLE_HDF5=ON \
+        -DBUILD_SHARED_LIBS=OFF \
   && make -j 3 \
   && make install \
   && cd .. \
