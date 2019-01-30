@@ -7,8 +7,6 @@ RUN echo "export PATH=$HOME/.local/bin:\$PATH" >> ~/.bashrc \
     && echo "alias python=python" >> ~/.bashrc \
     && echo "alias nosetests=nosetests3" >> ~/.bashrc
 
-RUN pip install cython --force-reinstall
-
 # build MOAB
 RUN cd $HOME/opt \
   && mkdir moab \
