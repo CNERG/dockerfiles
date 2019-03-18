@@ -1,0 +1,12 @@
+FROM ubuntu:18.04
+
+RUN apt-get -y  update
+RUN apt-get install -y  software-properties-common sudo wget build-essential \
+                        libhdf5-serial-dev libblas-dev liblapack-dev libarmadillo-dev \
+                        git cmake g++ gfortran
+
+RUN apt-get install -y libgl1-mesa-glx libglu1-mesa libxt6
+
+RUN apt-get -y update
+
+
