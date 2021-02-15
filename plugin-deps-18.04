@@ -1,0 +1,37 @@
+FROM ubuntu:18.04
+
+RUN apt-get -y  update
+RUN apt-get install -y  software-properties-common sudo wget build-essential \
+                        libhdf5-serial-dev libblas-dev liblapack-dev libarmadillo-dev \
+                        git cmake g++ gfortran
+
+RUN apt-get install -y libgl1-mesa-glx libglu1-mesa libxt6
+
+RUN apt-get -y update
+
+RUN \
+    mkdir -p ${HOME}/opt/moab && \
+    cd ${HOME}/opt/moab && \
+    git clone https://bitbucket.org/fathomteam/moab
+
+RUN \
+    mkdir -p ${HOME}/opt/moab/build && \
+    cd ${HOME}/opt/moab/build && \
+    cmake ../moab -DCMAKE_INSTALL_PREFIX=${HOME}/opt/moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON && \
+    make install -j 4
+
+RUN \
+    mkdir -p ${HOME}/opt/dagmc && \
+    cd ${HOME}/opt/dagmc && \
+    git clone https://github.com/svalinn/DAGMC
+
+RUN \
+    mkdir -p ${HOME}/opt/dagmc/build && \
+    cd ${HOME}/opt/dagmc/build && \
+    cmake ../DAGMC -DMOAB_DIR=${HOME}/opt/moab -DCMAKE_INSTALL_PREFIX=${HOME}/opt/dagmc \
+        -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DBUILD_TALLY=OFF && \
+    make install -j 4
+
+
+
+
